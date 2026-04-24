@@ -1,0 +1,33 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.python-version
+
+# --- 虛擬環境 (Virtual Environment) ---
+venv/
+env/
+ENV/
+.env
+
+# --- PyInstaller 打包產物 ---
+# 這些是編譯後的檔案，不需要進入版本控制
+build/
+dist/
+*.spec
+
+# --- 資料庫 (SQLite) ---
+# 嚴禁上傳包含正式資料或帳密的資料庫檔案
+*.db
+temple_data.db
+
+# --- 作業系統與開發工具 ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log
+
+# --- 例外 (確保 asset 檔案不被過濾) ---
+!favicon.ico

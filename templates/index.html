@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>正坤點燈管理系統</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .names-cell div {
+            border-bottom: 1px dashed #ccc;
+            padding: 2px 0;
+        }
+
+        .names-cell div:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">正坤點燈管理系統</span>
+            <div>
+                <button id="btnLogin" class="btn btn-outline-light btn-sm" data-bs-toggle="modal"
+                    data-bs-target="#loginModal">
+                    登入 (管理員)
+                </button>
+                <button id="btnLogout" class="btn btn-danger btn-sm d-none">
+                    登出
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+
+        <div class="row g-2 mb-3 bg-light p-3 rounded border">
+            <div class="col-auto">
+                <input type="text" id="searchInput" class="form-control" placeholder="輸入關鍵字搜尋...">
+            </div>
+            <div class="col-auto">
+                <button id="btnSearch" class="btn btn-secondary">查詢</button>
+                <button id="btnShowAll" class="btn btn-outline-secondary">顯示全部清單</button>
+                <button id="btnExport" class="btn btn-success ms-1">
+                    <i class="bi bi-file-earmark-spreadsheet"></i> 匯出 CSV
+                </button>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3>點燈清單</h3>
+            <button id="btnAdd" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#recordModal">
+                新增紀錄
+            </button>
+        </div>
+        <table class="table table-bordered table-hover bg-white shadow-sm">
+            <thead class="table-light">
+                <tr>
+                    <th width="10%">ID</th>
+                    <th width="35%">信眾姓名</th>
+                    <th width="15%">金額</th>
+                    <th width="25%">壇名</th>
+                    <th width="15%" class="text-center admin-col d-none">操作</th>
+                </tr>
+            </thead>
+            <tbody id="recordTableBody"></tbody>
+        </table>
+    </div>
+
+    <div class="modal fade" id="loginModal" tabindex="-1">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">管理員登入</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="username" class="form-control mb-2" placeholder="帳號" value="admin" />
+                    <input type="password" id="password" class="form-control" placeholder="密碼" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary w-100" id="submitLogin">
+                        登入
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="recordModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">新增點燈紀錄</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">信眾姓名
+                            <small class="text-muted">(多筆以空白或逗號分隔)</small></label>
+                        <input type="text" id="names" class="form-control" placeholder="例如: 吳雅惠, 李毓卿" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">金額</label>
+                        <input type="number" id="amount" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">壇名</label>
+                        <input type="text" id="altarName" class="form-control" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="saveRecord">
+                        儲存
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- // [INSERT] at line 122 (recordModal 結束標籤後) -->
+    <div class="modal fade" id="editModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">編輯點燈紀錄</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="editId">
+                    <div class="mb-3">
+                        <label class="form-label">信眾姓名</label>
+                        <input type="text" id="editNames" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">金額</label>
+                        <input type="number" id="editAmount" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">壇名</label>
+                        <input type="text" id="editAltarName" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="updateRecord">更新</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+
+</html>

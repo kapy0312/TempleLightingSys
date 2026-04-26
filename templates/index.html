@@ -94,6 +94,12 @@
                 <button id="btnExport" class="btn btn-success ms-1">
                     <i class="bi bi-file-earmark-spreadsheet"></i> 匯出 CSV
                 </button>
+                <button id="btnImport" class="btn btn-warning ms-1 admin-col d-none">
+                    <i class="bi bi-file-earmark-arrow-up"></i> 匯入 CSV / XLSX
+                </button>
+                <input type="file" id="importFile"
+                    accept=".csv, .xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    class="d-none">
             </div>
         </div>
 
@@ -107,7 +113,7 @@
             <thead class="table-light">
                 <tr>
                     <th width="10%">ID</th>
-                    <th width="35%">信眾姓名</th>
+                    <th width="35%">姓名</th>
                     <th width="15%">金額</th>
                     <th width="25%">壇名</th>
                     <th width="15%" class="text-center admin-col d-none">操作</th>
@@ -146,7 +152,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label class="form-label">信眾姓名
+                        <label class="form-label">姓名
                             <small class="text-muted">(多筆以空白或逗號分隔)</small></label>
                         <input type="text" id="names" class="form-control" placeholder="例如: 吳雅惠, 李毓卿" />
                     </div>
@@ -179,7 +185,7 @@
                 <div class="modal-body">
                     <input type="hidden" id="editId">
                     <div class="mb-3">
-                        <label class="form-label">信眾姓名</label>
+                        <label class="form-label">姓名</label>
                         <input type="text" id="editNames" class="form-control">
                     </div>
                     <div class="mb-3">

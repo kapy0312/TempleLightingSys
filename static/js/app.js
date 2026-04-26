@@ -178,7 +178,7 @@ document.getElementById('btnExport').addEventListener('click', async () => {
     }
 
     // 定義 CSV 標頭
-    const headers = ['編號', '信眾姓名', '金額', '壇名'];
+    const headers = ['編號', '姓名', '金額', '壇名'];
 
     // 處理資料行：將姓名中的換行、逗號與空白替換，避免破壞 CSV 結構
     const rows = records.map(r => [
@@ -204,4 +204,44 @@ document.getElementById('btnExport').addEventListener('click', async () => {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+});
+
+// 觸發隱藏的檔案選擇器
+document.getElementById('btnImport').addEventListener('click', () => {
+    document.getElementById('importFile').click();
+});
+
+// 當使用者選好檔案後觸發
+document.getElementById('importFile').addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // 二次確認視窗
+    const msg = "⚠️ 【危險操作警告】\n\n這將會「刪除目前資料庫中的所有紀錄」，並以匯入的 CSV 內容完全取代。\n\n確定要繼續嗎？此操作無法復原。";
+    if (!confirm(msg)) {
+        e.target.value = ''; // 取消則清空選擇
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+        const res = await fetch('/api/records/import', {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = await res.json();
+        if (res.ok) {
+            alert("✅ 資料匯入成功！");
+            loadRecords('', true); // 重新讀取清單並顯示全部
+        } else {
+            alert("❌ " + result.error);
+        }
+    } catch (err) {
+        alert("❌ 傳輸過程發生錯誤");
+    } finally {
+        e.target.value = ''; // 執行完後清空
+    }
 });

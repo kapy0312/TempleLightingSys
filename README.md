@@ -1,7 +1,3 @@
-沒問題！把 Python 的確切版本標示清楚是非常好的習慣，這能避免未來換電腦或別人接手時，因為版本不同（例如 Python 3.13 或更舊的版本）而導致 `pywebview` 或 `PyInstaller` 編譯失敗的慘劇。
-
-我已經幫你把版本資訊（`3.12.10`）更新進去，並把 `README.md` 的內容重新整理得更精確。請直接複製以下內容並覆蓋你的 `README.md`：
-
 ```markdown
 # 正坤點燈管理系統 (Temple Lighting Management System)
 

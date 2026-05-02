@@ -278,7 +278,7 @@ def import_records():
                 # 把陣列裡的姓名用分號合併，如果原本裡面就有空格也會保留
                 final_names = ",".join(r["names"])
                 # 這裡再將系統匯出時使用的空格，轉換為內部儲存用的分號，確保跨系統一致性
-                final_names = final_names.replace(" ", ";")
+                final_names = final_names.replace(" ", ",")
 
                 db.session.add(LightRecord(
                     names=final_names,

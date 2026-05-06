@@ -20,7 +20,7 @@ if __name__ == '__main__':
 
     # 3. 建立視窗，明確指定 localhost URL 而非傳入 app 物件
     window = webview.create_window(
-        title='正坤點燈資料管理系統 v1.0.3',
+        title='正坤點燈資料管理系統 v1.0.4',
         url='http://127.0.0.1:5001',
         width=1024,
         height=768,

@@ -43,6 +43,7 @@ document.getElementById("submitLogin").addEventListener("click", async () => {
 
 document.getElementById("btnLogout").addEventListener("click", async () => {
     await fetch("/api/auth/logout", { method: "POST" });
+    document.getElementById("password").value = ""; // 新增這行
     checkAuthStatus();
 });
 

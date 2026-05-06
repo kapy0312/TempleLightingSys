@@ -273,7 +273,6 @@ def import_records():
 
         # --- 統一寫入資料庫 ---
         if all_new_records:
-            LightRecord.query.delete()  # 覆蓋模式
             for r in all_new_records:
                 # 把陣列裡的姓名用分號合併，如果原本裡面就有空格也會保留
                 final_names = ",".join(r["names"])

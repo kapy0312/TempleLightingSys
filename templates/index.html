@@ -565,7 +565,7 @@
                             <th width="7%">編號</th>
                             <th width="28%">姓名</th>
                             <th width="18%">燈種</th>
-                            <th width="14%">金額</th>
+                            <th width="14%" class="admin-col d-none">金額</th>
                             <th width="18%">壇名</th>
                             <th width="15%" class="text-center admin-col d-none">操作</th>
                         </tr>
@@ -588,7 +588,7 @@
 
     <!-- 頁尾 -->
     <div class="footer-gov">
-        正坤佛院落成點燈管理系統 &nbsp;|&nbsp; <span>v1.0.6</span> &nbsp;|&nbsp; 版權所有 © 2026 正坤佛院
+        正坤佛院落成點燈管理系統 &nbsp;|&nbsp; <span>v1.0.7</span> &nbsp;|&nbsp; 版權所有 © 2026 正坤佛院
     </div>
 
     <!-- ── 登入 Modal ── -->
@@ -762,7 +762,7 @@
                     <td><span class="badge-id">${r.id}</span></td>
                     <td><div class="names-cell" id="names-${r.id}"></div></td>
                     <td><span class="badge-lamp">${r.lamp_type || '—'}</span></td>
-                    <td><span class="badge-amount" ${!isAdmin ? 'style="filter:blur(4px);user-select:none;"' : ''}>$${r.amount.toLocaleString()}</span></td>
+                    <td class="admin-col ${!isAdmin ? 'd-none' : ''}"><span class="badge-amount">$${r.amount.toLocaleString()}</span></td>
                     <td>${r.altar_name}</td>
                     ${adminTd}
                 `;
